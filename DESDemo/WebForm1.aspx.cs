@@ -15,6 +15,8 @@ namespace DESDemo
     {
         private static string key = "paul12030524";
         private static string data = "hello world,2016!你好,世界!";
+        //默认密钥向量
+        private static byte[] Keys = { 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF };
         protected void Page_Load(object sender, EventArgs e)
         {
             string M = DesEncrypt(key, data);
@@ -133,7 +135,7 @@ namespace DESDemo
         public static string DesEncrypt(string key,string encryptString)
         {
             byte[] keyBytes = Encoding.UTF8.GetBytes(key.Substring(0, 8));
-            byte[] keyIV = keyBytes;
+            byte[] keyIV = Keys;
             byte[] inputByteArray = Encoding.UTF8.GetBytes(encryptString);
             DESCryptoServiceProvider provider = new DESCryptoServiceProvider();
             MemoryStream mStream = new MemoryStream();
@@ -152,7 +154,7 @@ namespace DESDemo
         public static string DesDecrypt(string key,string decryptString)
         {
             byte[] keyBytes = Encoding.UTF8.GetBytes(key.Substring(0, 8));
-            byte[] keyIV = keyBytes;
+            byte[] keyIV = Keys;
             byte[] inputByteArray = Convert.FromBase64String(decryptString);
             DESCryptoServiceProvider provider = new DESCryptoServiceProvider();
             MemoryStream mStream = new MemoryStream();
